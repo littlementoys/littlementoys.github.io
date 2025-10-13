@@ -4,174 +4,120 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LittleMen Wholesale</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f7f7f7;
-      color: #222;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      background-color: black;
-      color: white;
-      padding: 20px;
-      font-size: 24px;
-    }
-
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      padding: 40px;
-    }
-
-    .product {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-    .product img {
-      width: 100%;
-      height: 180px;
-      object-fit: contain;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
-
-    button {
-      background: black;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      margin-top: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: background 0.2s;
-    }
-
-    button:hover {
-      background: #333;
-    }
-
-    #cart {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-      padding: 10px 20px;
-      text-align: left;
-    }
-
-    #checkoutBtn {
-      background: green;
-      color: white;
-      margin-top: 15px;
-    }
-
-    #checkoutBtn:disabled {
-      background: gray;
-      cursor: not-allowed;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
 
-<!-- 🔒 Password Gate -->
-<script>
-  const pw = prompt("Enter wholesale password:");
-  if (pw !== "a5#8ak_-2918$-3810%24@-351*afk_AGkg_83281$") {
-    alert("Access denied.");
-    window.location.href = "https://google.com";
-  }
-</script>
-
-<header>LittleMen Wholesale Access</header>
-
-<div id="cart">
-  <h3>Cart</h3>
-  <p id="cartCount">Total Units: 0</p>
-  <p id="remaining">Checking stock...</p>
-  <button id="checkoutBtn" disabled>Checkout</button>
-</div>
-
-<div class="product-grid" id="products"></div>
-
-<script>
-  // ✅ Products with correct extensions
-  const PRODUCTS = [
-    { name: "LittleRobot", ext: "jpg" },
-    { name: "LittleReptile", ext: "jpg" },
-    { name: "LittleSkelePirate", ext: "jpg" },
-    { name: "LittleSkeleton", ext: "jpg" },
-    { name: "LittleNinja", ext: "jpg" },
-    { name: "LittleBoxer", ext: "webp" },
-    { name: "LittleAlien", ext: "jpg" },
-    { name: "LittleAstronaut", ext: "jpg" },
-    { name: "LittleVigilante", ext: "jpeg" },
-    { name: "LittleCrashDummy", ext: "jpg" },
-    { name: "LittleDuck", ext: "jpg" }
-  ];
-
-  const BACKEND_URL = "https://your-backend.onrender.com"; // placeholder
-  let cart = {};
-  let totalUnits = 0;
-  let remaining = 100;
-
-  // Load products
-  const container = document.getElementById("products");
-  PRODUCTS.forEach(p => {
-    const div = document.createElement("div");
-    div.className = "product";
-    div.innerHTML = `
-      <img src="images/${p.name}.${p.ext}" alt="${p.name}">
-      <h3>${p.name}</h3>
-      <p>$5.50/unit wholesale</p>
-      <button onclick="addToCart('${p.name}')">Add 10</button>
-    `;
-    container.appendChild(div);
-  });
-
-  async function loadRemaining() {
-    try {
-      const res = await fetch(`${BACKEND_URL}/remaining`);
-      const data = await res.json();
-      remaining = data.remaining;
-    } catch {
-      remaining = 100;
+  <script>
+    // 🔐 Simple password protection
+    const pw = prompt("Enter wholesale password:");
+    if (pw !== "a5#8ak_-2918$-3810%24@-351*afk_AGkg_83281$") {
+      alert("Access denied");
+      window.location.href = "https://google.com";
     }
-    document.getElementById("remaining").textContent = `Remaining this week: ${remaining}`;
-  }
+  </script>
 
-  function addToCart(product) {
-    if (totalUnits + 10 > remaining) {
-      alert("Not enough stock left for this week!");
-      return;
-    }
-    cart[product] = (cart[product] || 0) + 10;
-    totalUnits += 10;
-    updateCartDisplay();
-  }
+  <h1>LittleMen Wholesale Store</h1>
 
-  function updateCartDisplay() {
-    document.getElementById("cartCount").textContent = `Total Units: ${totalUnits}`;
-    document.getElementById("checkoutBtn").disabled = totalUnits === 0;
-  }
+  <div id="cart">
+    <h2>Cart</h2>
+    <ul id="cart-items"></ul>
+    <button id="checkout-btn">Checkout</button>
+  </div>
 
-  document.getElementById("checkoutBtn").addEventListener("click", () => {
-    alert("Checkout system will be added once backend is live.");
-  });
+  <div class="product-grid">
 
-  loadRemaining();
-</script>
+    <!-- Product List -->
+    <div class="product-card" data-price-id="price_robot">
+      <img src="images/LittleRobot.jpg" alt="LittleRobot" />
+      <h3>LittleRobot</h3>
+      <p>Wholesale: $5.50/unit</p>
+      <button class="add-to-cart">Add to Cart</button>
+    </div>
 
+    <div class="product-card" data-price-id="price_reptile">
+      <img src="images/LittleReptile.jpg" alt="LittleReptile" />
+      <h3>LittleReptile</h3>
+      <p>Wholesale: $5.50/unit</p>
+      <button class="add-to-cart">Add to Cart</button>
+    </div>
+
+    <div class="product-card" data-price-id="price_skelepirate">
+      <img src="images/LittleSkelePirate.jpg" alt="LittleSkelePirate" />
+      <h3>LittleSkelePirate</h3>
+      <p>Wholesale: $5.50/unit</p>
+      <button class="add-to-cart">Add to Cart</button>
+    </div>
+
+    <div class="product-card" data-price-id="price_skeleton">
+      <img src="images/LittleSkeleton.jpg" alt="LittleSkeleton" />
+      <h3>LittleSkeleton</h3>
+      <p>Wholesale: $5.50/unit</p>
+      <button class="add-to-cart">Add to Cart</button>
+    </div>
+
+    <div class="product-card" data-price-id="price_ninja">
+      <img src="images/LittleNinja.jpg" alt="LittleNinja" />
+      <h3>LittleNinja</h3>
+      <p>Wholesale: $5.50/unit</p>
+      <button class="add-to-cart">Add to Cart</button>
+    </div>
+
+    <div class="product-card" data-price-id="price_boxer">
+      <img src="images/LittleBoxer.webp" alt="LittleBoxer" />
+      <h3>LittleBoxer</h3>
+      <p>Wholesale: $5.50/unit</p>
+      <button class="add-to-cart">Add to Cart</button>
+    </div>
+
+    <div class="product-card" data-price-id="price_alien">
+      <img src="images/LittleAlien.jpg" alt="LittleAlien" />
+      <h3>LittleAlien</h3>
+      <p>Wholesale: $5.50/unit</p>
+      <button class="add-to-cart">Add to Cart</button>
+    </div>
+
+    <div class="product-card" data-price-id="price_astronaut">
+      <img src="images/LittleAstronaut.jpg" alt="LittleAstronaut" />
+      <h3>LittleAstronaut</h3>
+      <p>Wholesale: $5.50/unit</p>
+      <button class="add-to-cart">Add to Cart</button>
+    </div>
+
+    <div class="product-card" data-price-id="price_vigilante">
+      <img src="images/LittleVigilante.jpeg" alt="LittleVigilante" />
+      <h3>LittleVigilante</h3>
+      <p>Wholesale: $5.50/unit</p>
+      <button class="add-to-cart">Add to Cart</button>
+    </div>
+
+    <div class="product-card" data-price-id="price_crashdummy">
+      <img src="images/LittleCrashDummy.jpg" alt="LittleCrashDummy" />
+      <h3>LittleCrashDummy</h3>
+      <p>Wholesale: $5.50/unit</p>
+      <button class="add-to-cart">Add to Cart</button>
+    </div>
+
+    <div class="product-card" data-price-id="price_duck">
+      <img src="images/LittleDuck.jpg" alt="LittleDuck" />
+      <h3>LittleDuck</h3>
+      <p>Wholesale: $5.50/unit</p>
+      <button class="add-to-cart">Add to Cart</button>
+    </div>
+
+  </div>
+
+  <script>
+    // Stripe Setup
+    const STRIPE_MODE = "test"; // switch to 'live' later
+    const STRIPE_KEYS = {
+      test: "pk_test_yourTestKeyHere",
+      live: "pk_live_yourLiveKeyHere"
+    };
+    const stripe = Stripe(STRIPE_KEYS[STRIPE_MODE]);
+  </script>
+
+  <script src="script.js"></script>
 </body>
 </html>
-
