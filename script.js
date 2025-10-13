@@ -4,7 +4,7 @@ let cart = [];
 function renderCart() {
   const cartItems = document.getElementById('cart-items');
   cartItems.innerHTML = '';
-  cart.forEach((item, index) => {
+  cart.forEach((item) => {
     const li = document.createElement('li');
     li.textContent = `${item.name} x${item.qty}`;
     cartItems.appendChild(li);
@@ -18,15 +18,18 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
     const priceId = card.getAttribute('data-price-id');
 
     const existing = cart.find(i => i.priceId === priceId);
-    if(existing) existing.qty++;
-    else cart.push({name, priceId, qty:1});
+    if(existing) existing.qty += 10; // add 10 instead of 1
+    else cart.push({name, priceId, qty:10}); // first add is 10
 
     renderCart();
   });
 });
 
 document.getElementById('checkout-btn').addEventListener('click', () => {
-  if(cart.length === 0) { alert('Cart is empty'); return; }
+  if(cart.length === 0) { 
+    alert('Cart is empty'); 
+    return; 
+  }
 
   const lineItems = cart.map(item => ({price: item.priceId, quantity: item.qty}));
 
