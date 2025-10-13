@@ -8,9 +8,6 @@
 <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
-<div id="content" style="display:none;">
-  <!-- All your page content goes here -->
-</div>
 
 <script>
   const pw = prompt("Enter wholesale password:");
@@ -22,95 +19,96 @@
   }
 </script>
 
+<div id="content" style="display:none;">
+  <h1>LittleMen Wholesale Store</h1>
 
-<h1>LittleMen Wholesale Store</h1>
-
-<div id="cart">
-  <h2>Cart</h2>
-  <ul id="cart-items"></ul>
-  <button id="checkout-btn">Checkout</button>
-</div>
-
-<div class="product-grid">
-
-  <!-- Product Template -->
-  <div class="product-card" data-price-id="PRICE_ID_ROBOT">
-    <img src="images/LittleRobot.jpg" alt="LittleRobot">
-    <h3>LittleRobot</h3>
-    <p>Wholesale: $5.50/unit</p>
-    <button class="add-to-cart">Add to Cart</button>
+  <div id="cart">
+    <h2>Cart</h2>
+    <ul id="cart-items"></ul>
+    <button id="checkout-btn">Checkout</button>
   </div>
 
-  <div class="product-card" data-price-id="PRICE_ID_REPTILE">
-    <img src="images/LittleReptile.jpg" alt="LittleReptile">
-    <h3>LittleReptile</h3>
-    <p>Wholesale: $5.50/unit</p>
-    <button class="add-to-cart">Add to Cart</button>
-  </div>
+  <div class="product-grid">
 
-  <div class="product-card" data-price-id="PRICE_ID_SKELEPIRATE">
-    <img src="images/LittleSkelePirate.jpg" alt="LittleSkelePirate">
-    <h3>LittleSkelePirate</h3>
-    <p>Wholesale: $5.50/unit</p>
-    <button class="add-to-cart">Add to Cart</button>
-  </div>
+    <!-- Product Cards -->
+    <div class="product-card" data-price-id="PRICE_ID_ROBOT">
+      <img src="images/LittleRobot.jpg" alt="LittleRobot">
+      <h3>LittleRobot</h3>
+      <p>Wholesale: $5.50/unit</p>
+      <button class="add-to-cart">Add 10 to Cart</button>
+    </div>
 
-  <div class="product-card" data-price-id="PRICE_ID_SKELETON">
-    <img src="images/LittleSkeleton.jpg" alt="LittleSkeleton">
-    <h3>LittleSkeleton</h3>
-    <p>Wholesale: $5.50/unit</p>
-    <button class="add-to-cart">Add to Cart</button>
-  </div>
+    <div class="product-card" data-price-id="PRICE_ID_REPTILE">
+      <img src="images/LittleReptile.jpg" alt="LittleReptile">
+      <h3>LittleReptile</h3>
+      <p>Wholesale: $5.50/unit</p>
+      <button class="add-to-cart">Add 10 to Cart</button>
+    </div>
 
-  <div class="product-card" data-price-id="PRICE_ID_NINJA">
-    <img src="images/LittleNinja.jpg" alt="LittleNinja">
-    <h3>LittleNinja</h3>
-    <p>Wholesale: $5.50/unit</p>
-    <button class="add-to-cart">Add to Cart</button>
-  </div>
+    <div class="product-card" data-price-id="PRICE_ID_SKELEPIRATE">
+      <img src="images/LittleSkelePirate.jpg" alt="LittleSkelePirate">
+      <h3>LittleSkelePirate</h3>
+      <p>Wholesale: $5.50/unit</p>
+      <button class="add-to-cart">Add 10 to Cart</button>
+    </div>
 
-  <div class="product-card" data-price-id="PRICE_ID_BOXER">
-    <img src="images/LittleBoxer.webp" alt="LittleBoxer">
-    <h3>LittleBoxer</h3>
-    <p>Wholesale: $5.50/unit</p>
-    <button class="add-to-cart">Add to Cart</button>
-  </div>
+    <div class="product-card" data-price-id="PRICE_ID_SKELETON">
+      <img src="images/LittleSkeleton.jpg" alt="LittleSkeleton">
+      <h3>LittleSkeleton</h3>
+      <p>Wholesale: $5.50/unit</p>
+      <button class="add-to-cart">Add 10 to Cart</button>
+    </div>
 
-  <div class="product-card" data-price-id="PRICE_ID_ALIEN">
-    <img src="images/LittleAlien.jpg" alt="LittleAlien">
-    <h3>LittleAlien</h3>
-    <p>Wholesale: $5.50/unit</p>
-    <button class="add-to-cart">Add to Cart</button>
-  </div>
+    <div class="product-card" data-price-id="PRICE_ID_NINJA">
+      <img src="images/LittleNinja.jpg" alt="LittleNinja">
+      <h3>LittleNinja</h3>
+      <p>Wholesale: $5.50/unit</p>
+      <button class="add-to-cart">Add 10 to Cart</button>
+    </div>
 
-  <div class="product-card" data-price-id="PRICE_ID_ASTRONAUT">
-    <img src="images/LittleAstronaut.jpg" alt="LittleAstronaut">
-    <h3>LittleAstronaut</h3>
-    <p>Wholesale: $5.50/unit</p>
-    <button class="add-to-cart">Add to Cart</button>
-  </div>
+    <div class="product-card" data-price-id="PRICE_ID_BOXER">
+      <img src="images/LittleBoxer.webp" alt="LittleBoxer">
+      <h3>LittleBoxer</h3>
+      <p>Wholesale: $5.50/unit</p>
+      <button class="add-to-cart">Add 10 to Cart</button>
+    </div>
 
-  <div class="product-card" data-price-id="PRICE_ID_VIGILANTE">
-    <img src="images/LittleVigilante.jpeg" alt="LittleVigilante">
-    <h3>LittleVigilante</h3>
-    <p>Wholesale: $5.50/unit</p>
-    <button class="add-to-cart">Add to Cart</button>
-  </div>
+    <div class="product-card" data-price-id="PRICE_ID_ALIEN">
+      <img src="images/LittleAlien.jpg" alt="LittleAlien">
+      <h3>LittleAlien</h3>
+      <p>Wholesale: $5.50/unit</p>
+      <button class="add-to-cart">Add 10 to Cart</button>
+    </div>
 
-  <div class="product-card" data-price-id="PRICE_ID_CRASHDUMMY">
-    <img src="images/LittleCrashDummy.jpg" alt="LittleCrashDummy">
-    <h3>LittleCrashDummy</h3>
-    <p>Wholesale: $5.50/unit</p>
-    <button class="add-to-cart">Add to Cart</button>
-  </div>
+    <div class="product-card" data-price-id="PRICE_ID_ASTRONAUT">
+      <img src="images/LittleAstronaut.jpg" alt="LittleAstronaut">
+      <h3>LittleAstronaut</h3>
+      <p>Wholesale: $5.50/unit</p>
+      <button class="add-to-cart">Add 10 to Cart</button>
+    </div>
 
-  <div class="product-card" data-price-id="PRICE_ID_DUCK">
-    <img src="images/LittleDuck.jpg" alt="LittleDuck">
-    <h3>LittleDuck</h3>
-    <p>Wholesale: $5.50/unit</p>
-    <button class="add-to-cart">Add to Cart</button>
-  </div>
+    <div class="product-card" data-price-id="PRICE_ID_VIGILANTE">
+      <img src="images/LittleVigilante.jpeg" alt="LittleVigilante">
+      <h3>LittleVigilante</h3>
+      <p>Wholesale: $5.50/unit</p>
+      <button class="add-to-cart">Add 10 to Cart</button>
+    </div>
 
+    <div class="product-card" data-price-id="PRICE_ID_CRASHDUMMY">
+      <img src="images/LittleCrashDummy.jpg" alt="LittleCrashDummy">
+      <h3>LittleCrashDummy</h3>
+      <p>Wholesale: $5.50/unit</p>
+      <button class="add-to-cart">Add 10 to Cart</button>
+    </div>
+
+    <div class="product-card" data-price-id="PRICE_ID_DUCK">
+      <img src="images/LittleDuck.jpg" alt="LittleDuck">
+      <h3>LittleDuck</h3>
+      <p>Wholesale: $5.50/unit</p>
+      <button class="add-to-cart">Add 10 to Cart</button>
+    </div>
+
+  </div>
 </div>
 
 <script src="script.js"></script>
