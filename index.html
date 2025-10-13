@@ -1,120 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LittleMen Wholesale</title>
-<link rel="stylesheet" href="styles.css">
-<script src="https://js.stripe.com/v3/"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LittleMen Wholesale</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      color: #222;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: black;
+      color: white;
+      padding: 20px;
+      font-size: 24px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 40px;
+    }
+
+    .product {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    button {
+      background: black;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: #333;
+    }
+
+    #cart {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      padding: 10px 20px;
+    }
+
+    #checkoutBtn {
+      background: green;
+      color: white;
+      margin-top: 15px;
+    }
+
+    #checkoutBtn:disabled {
+      background: gray;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
 <body>
-
-<div id="content" style="display:none;">
-  <h1>LittleMen Wholesale Store</h1>
+  <header>LittleMen Wholesale Access</header>
 
   <div id="cart">
-    <h2>Cart</h2>
-    <ul id="cart-items"></ul>
-    <button id="checkout-btn">Checkout</button>
+    <h3>Cart</h3>
+    <p id="cartCount">Total Units: 0</p>
+    <button id="checkoutBtn" disabled>Checkout</button>
   </div>
 
   <div class="product-grid">
-
-    <div class="product-card" data-price-id="PRICE_ID_ROBOT">
-      <img src="images/LittleRobot.jpg" alt="LittleRobot">
-      <h3>LittleRobot</h3>
-      <p>Wholesale: $5.50/unit</p>
-      <button class="add-to-cart">Add 10 to Cart</button>
-    </div>
-
-    <div class="product-card" data-price-id="PRICE_ID_REPTILE">
-      <img src="images/LittleReptile.jpg" alt="LittleReptile">
-      <h3>LittleReptile</h3>
-      <p>Wholesale: $5.50/unit</p>
-      <button class="add-to-cart">Add 10 to Cart</button>
-    </div>
-
-    <div class="product-card" data-price-id="PRICE_ID_SKELEPIRATE">
-      <img src="images/LittleSkelePirate.jpg" alt="LittleSkelePirate">
-      <h3>LittleSkelePirate</h3>
-      <p>Wholesale: $5.50/unit</p>
-      <button class="add-to-cart">Add 10 to Cart</button>
-    </div>
-
-    <div class="product-card" data-price-id="PRICE_ID_SKELETON">
-      <img src="images/LittleSkeleton.jpg" alt="LittleSkeleton">
-      <h3>LittleSkeleton</h3>
-      <p>Wholesale: $5.50/unit</p>
-      <button class="add-to-cart">Add 10 to Cart</button>
-    </div>
-
-    <div class="product-card" data-price-id="PRICE_ID_NINJA">
-      <img src="images/LittleNinja.jpg" alt="LittleNinja">
-      <h3>LittleNinja</h3>
-      <p>Wholesale: $5.50/unit</p>
-      <button class="add-to-cart">Add 10 to Cart</button>
-    </div>
-
-    <div class="product-card" data-price-id="PRICE_ID_BOXER">
-      <img src="images/LittleBoxer.webp" alt="LittleBoxer">
-      <h3>LittleBoxer</h3>
-      <p>Wholesale: $5.50/unit</p>
-      <button class="add-to-cart">Add 10 to Cart</button>
-    </div>
-
-    <div class="product-card" data-price-id="PRICE_ID_ALIEN">
-      <img src="images/LittleAlien.jpg" alt="LittleAlien">
-      <h3>LittleAlien</h3>
-      <p>Wholesale: $5.50/unit</p>
-      <button class="add-to-cart">Add 10 to Cart</button>
-    </div>
-
-    <div class="product-card" data-price-id="PRICE_ID_ASTRONAUT">
-      <img src="images/LittleAstronaut.jpg" alt="LittleAstronaut">
-      <h3>LittleAstronaut</h3>
-      <p>Wholesale: $5.50/unit</p>
-      <button class="add-to-cart">Add 10 to Cart</button>
-    </div>
-
-    <div class="product-card" data-price-id="PRICE_ID_VIGILANTE">
-      <img src="images/LittleVigilante.jpeg" alt="LittleVigilante">
-      <h3>LittleVigilante</h3>
-      <p>Wholesale: $5.50/unit</p>
-      <button class="add-to-cart">Add 10 to Cart</button>
-    </div>
-
-    <div class="product-card" data-price-id="PRICE_ID_CRASHDUMMY">
-      <img src="images/LittleCrashDummy.jpg" alt="LittleCrashDummy">
-      <h3>LittleCrashDummy</h3>
-      <p>Wholesale: $5.50/unit</p>
-      <button class="add-to-cart">Add 10 to Cart</button>
-    </div>
-
-    <div class="product-card" data-price-id="PRICE_ID_DUCK">
-      <img src="images/LittleDuck.jpg" alt="LittleDuck">
-      <h3>LittleDuck</h3>
-      <p>Wholesale: $5.50/unit</p>
-      <button class="add-to-cart">Add 10 to Cart</button>
-    </div>
-
+    <div class="product"><h3>LittleRobot</h3><button onclick="addToCart('LittleRobot')">Add 10</button></div>
+    <div class="product"><h3>LittleReptile</h3><button onclick="addToCart('LittleReptile')">Add 10</button></div>
+    <div class="product"><h3>LittleSkelePirate</h3><button onclick="addToCart('LittleSkelePirate')">Add 10</button></div>
+    <div class="product"><h3>LittleSkeleton</h3><button onclick="addToCart('LittleSkeleton')">Add 10</button></div>
+    <div class="product"><h3>LittleNinja</h3><button onclick="addToCart('LittleNinja')">Add 10</button></div>
+    <div class="product"><h3>LittleBoxer</h3><button onclick="addToCart('LittleBoxer')">Add 10</button></div>
+    <div class="product"><h3>LittleAlien</h3><button onclick="addToCart('LittleAlien')">Add 10</button></div>
+    <div class="product"><h3>LittleAstronaut</h3><button onclick="addToCart('LittleAstronaut')">Add 10</button></div>
+    <div class="product"><h3>LittleVigilante</h3><button onclick="addToCart('LittleVigilante')">Add 10</button></div>
+    <div class="product"><h3>LittleCrashDummy</h3><button onclick="addToCart('LittleCrashDummy')">Add 10</button></div>
+    <div class="product"><h3>LittleDuck</h3><button onclick="addToCart('LittleDuck')">Add 10</button></div>
   </div>
-</div>
 
-<!-- PASSWORD SCRIPT -->
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const content = document.getElementById("content");
+  <script>
+    const WEEKLY_LIMIT = 100;
+    let cart = {};
+    let totalUnits = 0;
 
-  const pw = prompt("Enter wholesale password:");
-  if (pw === "a5#8ak_-2918$-3810%24@-351*afk_AGkg_83281$") {
-    content.style.display = "block";
-  } else {
-    alert("Access denied");
-    window.location.href = "https://google.com";
-  }
-});
-</script>
+    function addToCart(product) {
+      if (totalUnits + 10 > WEEKLY_LIMIT) {
+        alert("You’ve reached the 100-unit weekly limit!");
+        return;
+      }
+      cart[product] = (cart[product] || 0) + 10;
+      totalUnits += 10;
+      updateCartDisplay();
+    }
 
-<script src="script.js"></script>
+    function updateCartDisplay() {
+      const cartCount = document.getElementById("cartCount");
+      cartCount.textContent = `Total Units: ${totalUnits}`;
+      document.getElementById("checkoutBtn").disabled = totalUnits === 0;
+    }
+
+    document.getElementById("checkoutBtn").addEventListener("click", () => {
+      alert(`Checkout initiated for ${totalUnits} units.\n(Stripe integration coming soon!)`);
+    });
+  </script>
 </body>
 </html>
