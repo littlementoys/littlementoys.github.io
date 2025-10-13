@@ -8,6 +8,20 @@
 <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
+<div id="content" style="display:none;">
+  <!-- All your page content goes here -->
+</div>
+
+<script>
+  const pw = prompt("Enter wholesale password:");
+  if(pw === "a5#8ak_-2918$-3810%24@-351*afk_AGkg_83281$") {
+    document.getElementById("content").style.display = "block";
+  } else {
+    alert("Access denied");
+    window.location.href = "https://google.com";
+  }
+</script>
+
 
 <h1>LittleMen Wholesale Store</h1>
 
