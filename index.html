@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LittleMen Wholesale</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+  <h1>LittleMen Wholesale Store</h1>
+  <div class="product-grid">
+
+    <!-- Product 1 -->
+    <div class="product-card">
+      <img src="littleman-gray.png" alt="LittleMen Gray">
+      <h3>LittleMen Gray</h3>
+      <p>Wholesale: $15/unit</p>
+      <button id="buy-littleman-gray">Buy Now</button>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="product-card">
+      <img src="littleman-gold.png" alt="LittleMen Gold">
+      <h3>LittleMen Gold</h3>
+      <p>Wholesale: $15/unit</p>
+      <button id="buy-littleman-gold">Buy Now</button>
+    </div>
+
+  </div>
+
+  <script>
+    const stripe = Stripe('YOUR_STRIPE_PUBLISHABLE_KEY');
+
+    document.getElementById('buy-littleman-gray').addEventListener('click', () => {
+      stripe.redirectToCheckout({
+        lineItems: [{price: 'PRICE_ID_GRAY', quantity: 1}],
+        mode: 'payment',
+        successUrl: window.location.href + '?success=true',
+        cancelUrl: window.location.href + '?canceled=true',
+      });
+    });
+
+    document.getElementById('buy-littleman-gold').addEventListener('click', () => {
+      stripe.redirectToCheckout({
+        lineItems: [{price: 'PRICE_ID_GOLD', quantity: 1}],
+        mode: 'payment',
+        successUrl: window.location.href + '?success=true',
+        cancelUrl: window.location.href + '?canceled=true',
+      });
+    });
+  </script>
+</body>
+</html>
