@@ -9,16 +9,6 @@
 </head>
 <body>
 
-<script>
-  const pw = prompt("Enter wholesale password:");
-  if(pw === "a5#8ak_-2918$-3810%24@-351*afk_AGkg_83281$") {
-    document.getElementById("content").style.display = "block";
-  } else {
-    alert("Access denied");
-    window.location.href = "https://google.com";
-  }
-</script>
-
 <div id="content" style="display:none;">
   <h1>LittleMen Wholesale Store</h1>
 
@@ -110,6 +100,20 @@
 
   </div>
 </div>
+
+<!-- PASSWORD SCRIPT -->
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const content = document.getElementById("content");
+    const pw = prompt("Enter wholesale password:");
+    if(pw === "a5#8ak_-2918$-3810%24@-351*afk_AGkg_83281$") {
+      content.style.display = "block";
+    } else {
+      alert("Access denied");
+      window.location.href = "https://google.com";
+    }
+  });
+</script>
 
 <script src="script.js"></script>
 </body>
