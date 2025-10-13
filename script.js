@@ -1,64 +1,60 @@
-const cart = {};
-const cartList = document.getElementById("cart-items");
-const checkoutBtn = document.getElementById("checkout-btn");
-
-const MAX_WEEKLY_UNITS = 100;
+let cart = {};
+const maxWeeklyUnits = 100; // shared weekly limit
 let totalUnits = 0;
 
-// Add to cart
+const cartItemsEl = document.getElementById("cart-items");
+const cartCountEl = document.getElementById("cart-count");
+const checkoutBtn = document.getElementById("checkout-btn");
+
+// 🛒 Add to Cart
 document.querySelectorAll(".add-to-cart").forEach((btn) => {
   btn.addEventListener("click", () => {
     const productCard = btn.closest(".product-card");
-    const name = productCard.querySelector("h3").textContent;
-    const priceId = productCard.dataset.priceId;
+    const id = productCard.dataset.id;
 
-    if (totalUnits + 10 > MAX_WEEKLY_UNITS) {
-      alert("Weekly limit reached (100 units total).");
+    if (totalUnits + 10 > maxWeeklyUnits) {
+      alert("Weekly limit of 100 units reached!");
       return;
     }
 
-    if (!cart[priceId]) {
-      cart[priceId] = { name, quantity: 0 };
-    }
-
-    cart[priceId].quantity += 10;
+    if (!cart[id]) cart[id] = 0;
+    cart[id] += 10;
     totalUnits += 10;
 
-    renderCart();
+    updateCartDisplay();
   });
 });
 
-function renderCart() {
-  cartList.innerHTML = "";
-  Object.values(cart).forEach((item) => {
+// 🧹 Update Cart
+function updateCartDisplay() {
+  cartItemsEl.innerHTML = "";
+  for (let id in cart) {
     const li = document.createElement("li");
-    li.textContent = `${item.name} — ${item.quantity} units`;
-    cartList.appendChild(li);
-  });
+    li.textContent = `${id} — ${cart[id]} units`;
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "Remove";
+    removeBtn.onclick = () => removeItem(id);
+    li.appendChild(removeBtn);
+    cartItemsEl.appendChild(li);
+  }
+
+  cartCountEl.textContent = totalUnits;
 }
 
-// Stripe Checkout
-checkoutBtn.addEventListener("click", async () => {
+// ❌ Remove Item
+function removeItem(id) {
+  if (cart[id]) {
+    totalUnits -= cart[id];
+    delete cart[id];
+    updateCartDisplay();
+  }
+}
+
+// 🧾 Checkout (placeholder until Stripe is live)
+checkoutBtn.addEventListener("click", () => {
   if (totalUnits === 0) {
-    alert("Your cart is empty.");
+    alert("Your cart is empty!");
     return;
   }
-
-  const lineItems = Object.keys(cart).map((id) => ({
-    price: id,
-    quantity: cart[id].quantity
-  }));
-
-  // Stripe checkout redirect
-  const { error } = await stripe.redirectToCheckout({
-    lineItems,
-    mode: "payment",
-    successUrl: window.location.origin + "/success.html",
-    cancelUrl: window.location.origin + "/cancel.html",
-  });
-
-  if (error) {
-    console.error(error);
-    alert("Checkout failed. Please try again.");
-  }
+  alert("Checkout system will be available after Stripe verification.");
 });
