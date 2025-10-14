@@ -9,100 +9,38 @@
 </head>
 <body>
 
-  <!--
   <script>
-    // 🔐 Password protection
+    // 🔐 Password gate
     const pw = prompt("Enter wholesale password:");
     if (pw !== "a5#8ak_-2918$-3810%24@-351*afk_AGkg_83281$") {
       alert("Access denied");
       window.location.href = "https://google.com";
     }
   </script>
--->
+
   <h1>LittleMen Wholesale Store</h1>
 
   <div id="cart">
-    <h2>Cart (<span id="cart-count">0</span> items)</h2>
+    <h2>Cart</h2>
     <ul id="cart-items"></ul>
     <button id="checkout-btn">Checkout</button>
   </div>
- 
+
   <div class="product-grid">
-
-    <div class="product-card" data-id="LittleRobot">
-      <img src="images/LittleRobot.jpg" alt="LittleRobot" />
-      <h3>LittleRobot</h3>
-      <button class="add-to-cart">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-id="LittleReptile">
-      <img src="images/LittleReptile.jpg" alt="LittleReptile" />
-      <h3>LittleReptile</h3>
-      <button class="add-to-cart">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-id="LittleSkelePirate">
-      <img src="images/LittleSkelePirate.jpg" alt="LittleSkelePirate" />
-      <h3>LittleSkelePirate</h3>
-      <button class="add-to-cart">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-id="LittleSkeleton">
-      <img src="images/LittleSkeleton.jpg" alt="LittleSkeleton" />
-      <h3>LittleSkeleton</h3>
-      <button class="add-to-cart">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-id="LittleNinja">
-      <img src="images/LittleNinja.jpg" alt="LittleNinja" />
-      <h3>LittleNinja</h3>
-      <button class="add-to-cart">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-id="LittleBoxer">
-      <img src="images/LittleBoxer.webp" alt="LittleBoxer" />
-      <h3>LittleBoxer</h3>
-      <button class="add-to-cart">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-id="LittleAlien">
-      <img src="images/LittleAlien.jpg" alt="LittleAlien" />
-      <h3>LittleAlien</h3>
-      <button class="add-to-cart">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-id="LittleAstronaut">
-      <img src="images/LittleAstronaut.jpg" alt="LittleAstronaut" />
-      <h3>LittleAstronaut</h3>
-      <button class="add-to-cart">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-id="LittleVigilante">
-      <img src="images/LittleVigilante.jpeg" alt="LittleVigilante" />
-      <h3>LittleVigilante</h3>
-      <button class="add-to-cart">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-id="LittleCrashDummy">
-      <img src="images/LittleCrashDummy.jpg" alt="LittleCrashDummy" />
-      <h3>LittleCrashDummy</h3>
-      <button class="add-to-cart">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-id="LittleDuck">
-      <img src="images/LittleDuck.jpg" alt="LittleDuck" />
-      <h3>LittleDuck</h3>
-      <button class="add-to-cart">Add to Cart</button>
-    </div>
-
+    <div class="product-card" data-name="LittleRobot"><img src="images/LittleRobot.jpg" alt="LittleRobot"/><h3>LittleRobot</h3><button class="add-to-cart">Add</button></div>
+    <div class="product-card" data-name="LittleReptile"><img src="images/LittleReptile.jpg" alt="LittleReptile"/><h3>LittleReptile</h3><button class="add-to-cart">Add</button></div>
+    <div class="product-card" data-name="LittleSkelePirate"><img src="images/LittleSkelePirate.jpg" alt="LittleSkelePirate"/><h3>LittleSkelePirate</h3><button class="add-to-cart">Add</button></div>
+    <div class="product-card" data-name="LittleSkeleton"><img src="images/LittleSkeleton.jpg" alt="LittleSkeleton"/><h3>LittleSkeleton</h3><button class="add-to-cart">Add</button></div>
+    <div class="product-card" data-name="LittleNinja"><img src="images/LittleNinja.jpg" alt="LittleNinja"/><h3>LittleNinja</h3><button class="add-to-cart">Add</button></div>
+    <div class="product-card" data-name="LittleBoxer"><img src="images/LittleBoxer.webp" alt="LittleBoxer"/><h3>LittleBoxer</h3><button class="add-to-cart">Add</button></div>
+    <div class="product-card" data-name="LittleAlien"><img src="images/LittleAlien.jpg" alt="LittleAlien"/><h3>LittleAlien</h3><button class="add-to-cart">Add</button></div>
+    <div class="product-card" data-name="LittleAstronaut"><img src="images/LittleAstronaut.jpg" alt="LittleAstronaut"/><h3>LittleAstronaut</h3><button class="add-to-cart">Add</button></div>
+    <div class="product-card" data-name="LittleVigilante"><img src="images/LittleVigilante.jpeg" alt="LittleVigilante"/><h3>LittleVigilante</h3><button class="add-to-cart">Add</button></div>
+    <div class="product-card" data-name="LittleCrashDummy"><img src="images/LittleCrashDummy.jpg" alt="LittleCrashDummy"/><h3>LittleCrashDummy</h3><button class="add-to-cart">Add</button></div>
+    <div class="product-card" data-name="LittleDuck"><img src="images/LittleDuck.jpg" alt="LittleDuck"/><h3>LittleDuck</h3><button class="add-to-cart">Add</button></div>
   </div>
- <footer>
-  <p><strong>LittleMen Toys LLC</strong></p>
-  <p>Email: littlementoys@gmail.com</p>
-  <p>Address: Plainsboro, NJ</p>
-  <p>All products handmade and shipped biweekly — wholesale only.</p>
-  <p>© 2025 LittleMen Toys</p>
-</footer>
+
   <script src="script.js"></script>
 </body>
 </html>
+
