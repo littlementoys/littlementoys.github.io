@@ -34,22 +34,30 @@ document.querySelectorAll(".add-to-cart").forEach(btn => {
 
 // Checkout
 checkoutBtn.addEventListener("click", async () => {
-  if (cart.length === 0) return alert("Your cart is empty!");
+  if (cart.length === 0) {
+    alert("Your cart is empty!");
+    return;
+  }
 
   try {
     const response = await fetch("https://littlemenwholesale.shop/api/checkout", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({ items }),
-});
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ items: cart }),
     });
+
     const data = await response.json();
-    if (data.url) window.location.href = data.url;
-    else alert("Checkout failed.");
+
+    if (data.url) {
+      window.location.href = data.url; // redirect to Stripe checkout
+    } else {
+      alert("Checkout failed.");
+    }
   } catch (err) {
-    console.error(err);
+    console.error("Checkout error:", err);
     alert("Checkout error. Check console.");
   }
 });
+
