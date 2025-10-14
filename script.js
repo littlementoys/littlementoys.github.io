@@ -1,60 +1,49 @@
-let cart = {};
-const maxWeeklyUnits = 100; // shared weekly limit
-let totalUnits = 0;
+// Stripe public key setup (use your test or live publishable key)
+const stripe = Stripe("pk_live_51SHb7QIgrOC6v5CQO85QjkYVnLInG9nEvnXFNpJ5TBoBmfJ3dYO7s1OtF1F16ioGIRDtOFZEQLvnwDXHz4dweSdh00wR260ysu");
 
-const cartItemsEl = document.getElementById("cart-items");
-const cartCountEl = document.getElementById("cart-count");
+const cart = [];
+const cartList = document.getElementById("cart-items");
 const checkoutBtn = document.getElementById("checkout-btn");
 
-// 🛒 Add to Cart
-document.querySelectorAll(".add-to-cart").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const productCard = btn.closest(".product-card");
-    const id = productCard.dataset.id;
+function renderCart() {
+  cartList.innerHTML = "";
+  cart.forEach((item, i) => {
+    const li = document.createElement("li");
+    li.textContent = `${item.name} x${item.quantity}`;
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "❌";
+    removeBtn.onclick = () => {
+      cart.splice(i, 1);
+      renderCart();
+    };
+    li.appendChild(removeBtn);
+    cartList.appendChild(li);
+  });
+}
 
-    if (totalUnits + 10 > maxWeeklyUnits) {
-      alert("Weekly limit of 100 units reached!");
-      return;
-    }
-
-    if (!cart[id]) cart[id] = 0;
-    cart[id] += 10;
-    totalUnits += 10;
-
-    updateCartDisplay();
+document.querySelectorAll(".add-to-cart").forEach(btn => {
+  btn.addEventListener("click", e => {
+    const name = e.target.closest(".product-card").dataset.name;
+    const existing = cart.find(p => p.name === name);
+    if (existing) existing.quantity++;
+    else cart.push({ name, quantity: 1 });
+    renderCart();
   });
 });
 
-// 🧹 Update Cart
-function updateCartDisplay() {
-  cartItemsEl.innerHTML = "";
-  for (let id in cart) {
-    const li = document.createElement("li");
-    li.textContent = `${id} — ${cart[id]} units`;
-    const removeBtn = document.createElement("button");
-    removeBtn.textContent = "Remove";
-    removeBtn.onclick = () => removeItem(id);
-    li.appendChild(removeBtn);
-    cartItemsEl.appendChild(li);
-  }
+checkoutBtn.addEventListener("click", async () => {
+  if (cart.length === 0) return alert("Your cart is empty!");
 
-  cartCountEl.textContent = totalUnits;
-}
+  const response = await fetch("https://littlemen.vercel.app/api/create-checkout-session", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ items: cart })
+  });
 
-// ❌ Remove Item
-function removeItem(id) {
-  if (cart[id]) {
-    totalUnits -= cart[id];
-    delete cart[id];
-    updateCartDisplay();
+  const data = await response.json();
+  if (data.url) {
+    window.location.href = data.url;
+  } else {
+    alert("Checkout failed.");
   }
-}
-
-// 🧾 Checkout (placeholder until Stripe is live)
-checkoutBtn.addEventListener("click", () => {
-  if (totalUnits === 0) {
-    alert("Your cart is empty!");
-    return;
-  }
-  alert("Checkout system will be available after Stripe verification.");
 });
