@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         price_data: {
           currency: "usd",
           product_data: { name: item.name },
-          unit_amount: 2000, // example: $20.00 each
+          unit_amount: 550, // $5.50
         },
         quantity: item.quantity,
       })),
@@ -25,10 +25,10 @@ export default async function handler(req, res) {
       cancel_url: "https://littlemenwholesale.shop/cancel",
     });
 
-    res.status(200).json({ url: session.url });
+    return res.status(200).json({ url: session.url });
   } catch (err) {
-    console.error("Stripe Checkout error:", err);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error("Stripe error:", err);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 }
 
