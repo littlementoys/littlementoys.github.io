@@ -18,7 +18,8 @@
       window.location.href = "https://google.com";
     }
   </script>
--->
+  -->
+
   <h1>LittleMen Wholesale Store</h1>
 
   <div id="cart">
@@ -43,9 +44,7 @@
   </div>
 
   <script>
-    const PRICE = 5.50;
     const cart = {};
-
     const cartList = document.getElementById('cart-items');
     const totalEl = document.getElementById('total');
     const checkoutBtn = document.getElementById('checkout-btn');
@@ -55,7 +54,7 @@
       btn.addEventListener('click', () => {
         const name = btn.parentElement.dataset.name;
         if (!cart[name]) cart[name] = 0;
-        cart[name] += 10; // adds 10 units each click
+        cart[name] += 10; // adds 10 units per click
         updateCart();
       });
     });
@@ -69,42 +68,47 @@
     // Update cart display
     function updateCart() {
       cartList.innerHTML = '';
-      let total = 0;
+      let totalQty = 0;
       for (const [name, qty] of Object.entries(cart)) {
         const li = document.createElement('li');
-        li.innerHTML = `${name} - ${qty} units ($${(qty * PRICE).toFixed(2)}) 
-          <button onclick="removeItem('${name}')">Remove</button>`;
+        li.innerHTML = `${name} - ${qty} units <button onclick="removeItem('${name}')">Remove</button>`;
         cartList.appendChild(li);
-        total += qty * PRICE;
+        totalQty += qty;
       }
-      totalEl.textContent = `Total: $${total.toFixed(2)}`;
+      totalEl.textContent = `Total Units: ${totalQty}`;
     }
 
     // Checkout handler
     checkoutBtn.addEventListener('click', async () => {
       const totalQty = Object.values(cart).reduce((a, b) => a + b, 0);
+      if (totalQty === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
       if (totalQty > 100) {
         alert("Weekly limit reached (100 units max)");
         return;
       }
 
-      const items = Object.entries(cart).map(([name, qty]) => ({
-        name,
-        price: PRICE,
-        quantity: qty
-      }));
+      const items = Object.entries(cart).map(([name, quantity]) => ({ name, quantity }));
 
-      const res = await fetch("/api/create-checkout-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items }),
-      });
+      try {
+        const res = await fetch("/api/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ items }),
+        });
 
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        alert("Checkout failed.");
+        const data = await res.json();
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          console.error("Checkout failed:", data);
+          alert("Checkout failed.");
+        }
+      } catch (err) {
+        console.error("Error:", err);
+        alert("Checkout error. Check console.");
       }
     });
   </script>
