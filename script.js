@@ -37,10 +37,13 @@ checkoutBtn.addEventListener("click", async () => {
   if (cart.length === 0) return alert("Your cart is empty!");
 
   try {
-    const response = await fetch("https://www.littlemenwholesale.shop/api/create-checkout-session", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: cart })
+    const response = await fetch("https://littlemenwholesale.shop/api/checkout", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ items }),
+});
     });
     const data = await response.json();
     if (data.url) window.location.href = data.url;
