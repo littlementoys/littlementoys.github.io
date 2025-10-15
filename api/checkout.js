@@ -1,6 +1,6 @@
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY); // set this in Vercel env vars
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -14,7 +14,6 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "No items provided" });
     }
 
-    // Manually set the amount per unit — prices stay hidden to customers
     const UNIT_PRICE = 550; // in cents ($5.50)
 
     const session = await stripe.checkout.sessions.create({
@@ -23,17 +22,19 @@ export default async function handler(req, res) {
       line_items: items.map(item => ({
         price_data: {
           currency: "usd",
-          product_data: {
-            name: item.name,
-          },
+          product_data: { name: item.name },
           unit_amount: UNIT_PRICE,
         },
         quantity: item.quantity,
       })),
+      shipping_address_collection: {
+        allowed_countries: ['US', 'CA'], // 🇬🇪 added Georgia for you
+      },
+      customer_creation: 'always',
       success_url: "https://littlemenwholesale.shop/success",
       cancel_url: "https://littlemenwholesale.shop/cancel",
       metadata: {
-        order_items: JSON.stringify(items), // 👈 lets you see what they bought
+        order_items: JSON.stringify(items),
       },
     });
 
